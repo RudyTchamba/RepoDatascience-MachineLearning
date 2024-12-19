@@ -7,7 +7,7 @@ from duckdb import DuckDBPyConnection
 import duckdb as ddb
 
 def connect_to_database(path: str) -> DuckDBPyConnection:
-    logging.info("Connecting to database a {path}")
+    logging.info(f"Connecting to database a {path}")
     con = ddb.connect(path)
     con.sql("""
         SET s3_access_key_id='';
