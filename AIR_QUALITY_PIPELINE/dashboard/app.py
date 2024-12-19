@@ -23,11 +23,11 @@ def map_figure():
     map_fig = px.scatter_mapbox(
         latest_values_df,
         lat="lat",
-        Lon="lon",
+        lon="lon",
         hover_name="location",
         hover_data={
-            """"lat": False,
-            "lon": False,"""
+            "lat": False,
+            "lon": False,
             "datetime":True,
             "pm10": True,
             "pm25": True,
@@ -38,17 +38,52 @@ def map_figure():
 
     map_fig.update_layout(
         mapbox_style = "open-street-map",
-        height=1000,
+        height=800,
         title="Air Quality Monitoring Locations"
     )
 
     return map_fig
 
+
+def line_figure():
+
+    line_fig = px.line(
+        daily_stats_df[daily_stats_df["parameter"] == "so2"].sort_values(by="measurement_date"),
+        x = "measurement_date",
+        y = "average_value",
+        title = "Plot Over Time of SO2 Levels"
+    )
+
+    return line_fig
+
+def box_figure():
+
+    box_fig = px.box(
+        daily_stats_df[daily_stats_df["parameter"] == "so2"].sort_values(by="weekday_number"),
+        x = "weekday",
+        y = "average_value",
+        title = "Distrubution of SO2 Levels by Weekday"
+    )
+
+    return box_fig
+
 app = dash.Dash(__name__)
 
-app.layout = html.Div(
-    dcc.Graph(id="Sensor Locations", figure=map_figure)
-)
+app.layout = html.Div([
+        dcc.Tabs([
+            dcc.Tab(
+                label = "Sensor Locations",
+                children = [dcc.Graph(id="map-view", figure=map_figure())]
+            ),
+            dcc.Tab(
+                label = "Parameters Plots",
+                children = [
+                    dcc.Graph(id="line-plot", figure=line_figure()),
+                    dcc.Graph(id="box-plot", figure=box_figure())
+                ]
+            )
+        ])
+])
 
 if __name__ == "__main__":
     app.run_server(debug=True)
