@@ -26,7 +26,7 @@ pip install -r requirements.txt
 ## Running the Application
 1. Clone the repository:
 ```
-git clone https://github.com/RudyTchamba/RepoDatascience-MachineLearning.git
+git clone https://github.com/RudyTchamba/RepoDatascience-MachineLearning/tree/main/Rainfall_Predicion
 cd Rainfall_Prediction
 ```
 2. Run the Flask application:
