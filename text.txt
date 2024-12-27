@@ -1,1 +1,0 @@
-rm air_quality.db Rainfall_Predicion/EDA_Model.ipynb
